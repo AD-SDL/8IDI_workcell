@@ -11,7 +11,7 @@ from ur_dashboard import UR_DASHBOARD
 import robotiq_gripper as robotiq_gripper
 from urx import Robot, RobotException
 
-class UR5(UR_DASHBOARD):
+class URRobot(UR_DASHBOARD):
     
 
     def __init__(self, IP:str = "146.137.240.38", PORT: int = 29999):
@@ -187,7 +187,7 @@ if __name__ == "__main__":
     pos1= [-0.22575, -0.65792, 0.39271, 2.216, 2.196, -0.043]
     pos2= [0.22575, -0.65792, 0.39271, 2.216, 2.196, -0.043]
     
-    robot = UR5()
+    robot = URRobot()
     # robot.transfer(robot.plate_exchange_1,robot.plate_exchange_1)
     for i in range(1000):
         print(robot.get_movement_state())
