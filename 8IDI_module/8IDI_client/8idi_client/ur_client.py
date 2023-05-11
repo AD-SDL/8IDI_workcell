@@ -13,7 +13,7 @@ import socket
 from wei_services.srv import WeiDescription 
 from wei_services.srv import WeiActions  
 
-class UR5Client(Node):
+class URClient(Node):
     '''
     The jointControlNode inputs data from the 'action' topic, providing a set of commands for the driver to execute. It then receives feedback, 
     based on the executed command and publishes the state of the peeler and a description of the peeler to the respective topics.
@@ -183,7 +183,7 @@ def main(args = None):
     rclpy.init(args=args)  # initialize Ros2 communication
 
     try:
-        ur5_client = UR5Client()
+        ur5_client = URClient()
         executor = MultiThreadedExecutor()
         executor.add_node(ur5_client)
 

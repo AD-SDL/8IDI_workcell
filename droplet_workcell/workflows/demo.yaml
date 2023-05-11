@@ -8,7 +8,7 @@ workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
 
 modules:
 
-  - name: ur5
+  - name: ur3
 
 
 flowdef:
