@@ -170,7 +170,19 @@ class URClient(Node):
             self.get_logger().info(str(pos1))
             pos2 = vars.get('pos2')
             self.get_logger().info(str(pos2))
-            self.ur5.transfer(pos1, pos2)
+
+            try:
+                self.ur5.transfer(pos1, pos2)            
+            except Exception as er:
+                response.action_response = -1
+                response.action_msg = "Transfer failed"
+                self.state = "ERROR"
+            else:
+                response.action_response = 0
+                response.action_msg = "Transfer successfully completed"
+                self.state = "COMPLETED"
+            finally:
+                return response
             
         elif request.action_handle == 'run_droplet':
             self.action_flag = "BUSY"
@@ -182,7 +194,7 @@ class URClient(Node):
             self.get_logger().info(str(tip_number_1))
             tip_number_2 = vars.get('tip_number_2', 2)
             self.get_logger().info(str(tip_number_2))
-            
+
             try:
                 self.ur5.run_droplet(tip_number_1, tip_number_2)
             except Exception as er:
