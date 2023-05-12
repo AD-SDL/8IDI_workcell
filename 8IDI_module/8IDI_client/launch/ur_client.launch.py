@@ -26,7 +26,7 @@ def generate_launch_description():
             namespace = 'std_ns',
             executable = 'ur_client',
             output = "screen",
-            name='URClientNode',
+            name='8idiURNode',
             parameters = [{"ip":ip}],
             emulate_tty=True
     )
