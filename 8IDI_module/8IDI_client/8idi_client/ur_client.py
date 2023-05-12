@@ -98,6 +98,7 @@ class URClient(Node):
                 self.action_flag = "READY"
                 self.get_logger().warn("Trying to clear the error messages")
                 self.ur5.initialize()
+                self.action_flag = "UNKOWN"
 
             elif self.state == "COMPLETED" and self.action_flag == "BUSY":
                 self.state = "COMPLETED"
