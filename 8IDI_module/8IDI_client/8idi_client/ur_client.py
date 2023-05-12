@@ -172,10 +172,29 @@ class URClient(Node):
             self.get_logger().info(str(pos2))
             self.ur5.transfer(pos1, pos2)
             
+        elif request.action_handle == 'run_droplet':
+            self.action_flag = "BUSY"
+            vars = eval(request.vars)
+            self.get_logger().info(str(vars))
 
-        self.state = "COMPLETED"
-
-        return response
+    
+            tip_number_1 = vars.get('tip_number_1', 1)
+            self.get_logger().info(str(tip_number_1))
+            tip_number_2 = vars.get('tip_number_2', 2)
+            self.get_logger().info(str(tip_number_2))
+            
+            try:
+                self.ur5.run_droplet(tip_number_1, tip_number_2)
+            except Exception as er:
+                response.action_response = -1
+                response.action_msg = "Run droplet failed"
+                self.state = "ERROR"
+            else:
+                response.action_response = 0
+                response.action_msg = "Run droplet successfully completed"
+                self.state = "COMPLETED"
+            finally:
+                return response
 
 
 def main(args = None):
