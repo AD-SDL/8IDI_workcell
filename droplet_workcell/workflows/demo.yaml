@@ -1,0 +1,23 @@
+metadata:
+  name: PCR - Workflow
+  author: Casey Stone, Rafael Vescovi
+  info: Initial PCR workflow for RPL workcell
+  version: 0.1
+
+workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
+
+modules:
+
+  - name: ur3
+
+
+flowdef:
+
+  - name: Run droplet experiment
+    module: ur5
+    command: run_droplet
+    args:
+      tip_number_1: 1
+      tip_number_2: 2  
+    checks: null
+    comment: Place plate in Tecan
