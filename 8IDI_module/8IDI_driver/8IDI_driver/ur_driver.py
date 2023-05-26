@@ -9,7 +9,7 @@ from time import sleep
 from copy import deepcopy
 
 from ur_dashboard import UR_DASHBOARD
-import robotiq_gripper as robotiq_gripper
+import robotiq_gripper 
 from urx import Robot, RobotException
 import epics
 
