@@ -22,7 +22,29 @@ class URRobot(UR_DASHBOARD):
 
         # ur5 SETUP:
         self.ur5 = None
+        self.gripper = None
+        self.pipette = None
+        self.tool_changer = None
+        self.camera = None
+    
         self.connect_ur()
+        self.connect_gripper()
+        self.connect_tool_changer()
+        self.connect_pipette()
+        self.connect_camera()
+
+        self.pipette_drop_tip_value = -8
+        self.pipette_aspirate_value = 2.0
+        self.pipette_dispense_value = -2.0
+        self.droplet_value = 0.3
+
+        self.gripper_close = 130 # 0-255 (255 is closed)
+        self.griper_open = 0
+        self.gripper_speed = 150 # 0-255
+        self.gripper_force = 0 # 0-255
+
+        print('Opening gripper...')
+        self.gripper.move_and_wait_for_pos(self.griper_open, self.gripper_speed, self.gripper_force)
 
         self.acceleration = 2
         self.velocity = 2
@@ -69,38 +91,6 @@ class URRobot(UR_DASHBOARD):
         self.cam_image = epics.PV("8idiARV1:Pva1:Image")
         self.cam_capture =  epics.PV("8idiARV1:Pva1:Capture")
 
-        # Establishing a connection with the pipette using EPICS library.
-        self.pipette = epics.PV("8idQZpip:m1.VAL")
-        self.pipette_drop_tip_value = -8
-        self.pipette_aspirate_value = 2.0
-        self.pipette_dispense_value = -2.0
-        self.droplet_value = 0.3
-      
-        # Establishing a connection with the tool changer using EPICS library.
-        self.tool_changer = epics.PV("8idSMC100PIP:LJT7:1:DO0")
-
-        # GRIPPER SETUP:
-        print('Creating gripper...')
-        self.gripper = robotiq_gripper.RobotiqGripper()
-        print('Connecting to gripper...')
-        
-        self.gripper.connect(self.IP, 63352)
-
-        if self.gripper.is_active():
-            print('Gripper already active')
-        else:
-            print('Activating gripper...')
-            self.gripper.activate()
-        
-
-        self.gripper_close = 130 # 0-255 (255 is closed)
-        self.griper_open = 0
-        self.gripper_speed = 150 # 0-255
-        self.gripper_force = 0 # 0-255
-
-        print('Opening gripper...')
-        self.gripper.move_and_wait_for_pos(self.griper_open, self.gripper_speed, self.gripper_force)
-
     def connect_ur(self):
         """
         Description: Create conenction to the UR robot
@@ -116,6 +106,70 @@ class URRobot(UR_DASHBOARD):
             else:
                 print('Successful ur5 connection')
                 break
+
+    def connect_gripper(self):
+        """
+        Connect to the gripper
+        """
+        try:
+            # GRIPPER SETUP:
+            self.gripper = robotiq_gripper.RobotiqGripper()
+            print('Connecting to gripper...')
+            self.gripper.connect(self.IP, 63352)
+
+        except Exception as err:
+            print("Gripper error: ", err)
+
+        else:
+            if self.gripper.is_active():
+                print('Gripper already active')
+            else:
+                print('Activating gripper...')
+                self.gripper.activate()
+
+    def connect_tool_changer(self):
+        """
+        Connect tool changer
+        """
+
+        try:
+            # Establishing a connection with the tool changer using EPICS library.
+            self.tool_changer = epics.PV("8idSMC100PIP:LJT7:1:DO0")
+
+        except Exception as err:
+            print("Tool changer error: ", err)
+
+        else:
+            print("Tool changer is connected.")
+
+    def connect_pipette(self):
+        """
+        Connect pipette
+        """
+
+        try:
+            # Establishing a connection with the pipette using EPICS library.
+            self.pipette = epics.PV("8idQZpip:m1.VAL")
+
+        except Exception as err:
+            print("Pipette error: ", err)
+
+        else:
+            print("Pipette is connected.")
+    def connect_camera(self):
+        """
+        Connect camera
+        """
+
+        try:
+            # Establishing a connection with the pipette using EPICS library.
+            self.pipette = epics.PV("8idQZpip:m1.VAL")
+
+        except Exception as err:
+            print("Pipette error: ", err)
+
+        else:
+            print("Pipette is connected.")
 
     def disconnect_ur(self):
         """
