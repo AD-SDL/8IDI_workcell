@@ -7,6 +7,8 @@ import socket
 from multiprocessing.connection import wait
 from time import sleep
 from copy import deepcopy
+from time import sleep
+
 
 from ur_dashboard import UR_DASHBOARD
 import robotiq_gripper 
@@ -100,14 +102,14 @@ class URRobot(UR_DASHBOARD):
                 print('Activating gripper...')
                 self.gripper.activate()
 
-    def connect_tool_changer(self):
+    def connect_tool_changer(self, tool_changer_pv:str):
         """
         Connect tool changer
         """
 
         try:
             # Establishing a connection with the tool changer using EPICS library.
-            self.tool_changer = epics.PV("8idSMC100PIP:LJT7:1:DO0")
+            self.tool_changer = epics.PV(tool_changer_pv)
 
         except Exception as err:
             print("Tool changer error: ", err)
@@ -115,14 +117,14 @@ class URRobot(UR_DASHBOARD):
         else:
             print("Tool changer is connected.")
 
-    def connect_pipette(self):
+    def connect_pipette(self, pipette_pv:str):
         """
         Connect pipette
         """
 
         try:
             # Establishing a connection with the pipette using EPICS library.
-            self.pipette = epics.PV("8idQZpip:m1.VAL")
+            self.pipette = epics.PV(pipette_pv)
 
         except Exception as err:
             print("Pipette error: ", err)
@@ -130,7 +132,7 @@ class URRobot(UR_DASHBOARD):
         else:
             print("Pipette is connected.")
 
-    def connect_camera(self):
+    def connect_camera(self, camera_pv:str):
         """
         Connect camera
         """
@@ -175,7 +177,7 @@ class URRobot(UR_DASHBOARD):
 
         return movement_state
 
-    def home_robot(self):
+    def home(self):
         """
         Description: Moves the robot to the home location.
         """
