@@ -8,12 +8,11 @@ class UR3_8_ID_I(URRobot):
             - PORT: Port number of the UR3e robot to connect the robot teach pendent
     """
 
-    def __init__(self, IP:str = "164.54.116.129", PORT:int = 29999):
+    def __init__(self, IP:str = "164.54.116.129", PORT:int = 29999, tool_changer_pv:str = "8idSMC100PIP:LJT7:1:DO0", pipette_pv:str = "8idQZpip:m1.VAL", camera_pv:str = None, gripper:bool = False):
 
-        super().__init__(IP=IP, PORT=PORT)
+        super().__init__(IP=IP, PORT=PORT, tool_changer_pv = tool_changer_pv, pipette_pv = pipette_pv, camera_pv = camera_pv, gripper = gripper)
 
         self.initialize() # Initilialize the robot
-        self.ur
 
         self.acceleration = 0.5
         self.velocity = 0.2
@@ -49,20 +48,11 @@ class UR3_8_ID_I(URRobot):
         self.trash_bin_above = [0.187412530306272, 0.2868009561100828, 0.12712991727750073, 1.438076830279249, -0.2414934112798892, -0.2954944172453427]
         self.trash_bin = [0.1874179391982658, 0.2867862635600429, 0.013156853887081085, 1.438022625162957, -0.24148065729851562, -0.2954808450568972]
 
-        # Establishing a connection with the camera using EPICS library.
-        self.cam_acquire =  epics.PV("8idiARV1:cam1:Acquire")
-        self.cam_image = epics.PV("8idiARV1:Pva1:Image")
-        self.cam_capture =  epics.PV("8idiARV1:Pva1:Capture")
-
-        # Establishing a connection with the pipette using EPICS library.
-        self.pipette = epics.PV("8idQZpip:m1.VAL")
         self.pipette_drop_tip_value = -8
         self.pipette_aspirate_value = 2.0
         self.pipette_dispense_value = -2.0
         self.droplet_value = 0.3
-      
-        # Establishing a connection with the tool changer using EPICS library.
-        self.tool_changer = epics.PV("8idSMC100PIP:LJT7:1:DO0")
+
 
     def connect_robot(self):
         """
