@@ -6,7 +6,7 @@ from rclpy.callback_groups import MutuallyExclusiveCallbackGroup, ReentrantCallb
 from rclpy.executors import MultiThreadedExecutor, SingleThreadedExecutor
 from std_msgs.msg import String
 
-from ur5_driver.ur5_driver import UR5 
+from 8IDI_diriver_ 
 from time import sleep
 import socket
 

@@ -260,7 +260,7 @@ class URRobot(UR_DASHBOARD):
         self.ur.movej(self.home_joint, self.acceleration, self.velocity)
 
         
-    def transfer(self, pos1, pos2):
+    def transfer(self, pos1, pos2, gripper_rotation:str = None, safe_heigh: int = None):
         ''''''
         self.ur.set_tcp((0, 0, 0, 0, 0, 0))
         # robot.ur.set_payload(2, (0, 0, 0.1))
@@ -268,6 +268,30 @@ class URRobot(UR_DASHBOARD):
         self.pick(pos1)
         self.place(pos2)
         print('Finished transfer')
+
+    def run_urp_program(self, transfer_file_path:str = None, program_name: str = None):
+
+        """"""
+        if not program_name:
+            print("Provide program name!")
+            return
+        
+        ur_program_path = "/programs/program_name"
+
+        if transfer_file_path:
+            self.transfer_program(local_path = transfer_file_path, ur_path = ur_program_path)
+            sleep(2)
+
+        self.load_program(program_path = ur_program_path)
+        sleep(2)
+        self.run_program()
+        
+        run_status = "Busy"
+        while run_status == "Busy":
+            if self.get_program_run_status() != "running": # TODO: Change this with the correct output message
+                run_status = "Completed"
+
+        return 
 
 if __name__ == "__main__":
 
