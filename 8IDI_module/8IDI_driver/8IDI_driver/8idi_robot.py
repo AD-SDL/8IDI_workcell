@@ -1,11 +1,11 @@
 from ur_driver import URRobot
 
-class UR3_8_ID_I(URRobot):
+class ur_8_ID_I(URRobot):
     """ 
-    Description: This class creates a connection to the UR3e robot located in Argonne National Laboratory - APS 8_ID_I and contains functions to perform automated liquid handling experiments.
+    Description: This class creates a connection to the ure robot located in Argonne National Laboratory - APS 8_ID_I and contains functions to perform automated liquid handling experiments.
     Parameters: 
-            - IP: IP address of the UR3e robot.
-            - PORT: Port number of the UR3e robot to connect the robot teach pendent
+            - IP: IP address of the ure robot.
+            - PORT: Port number of the ure robot to connect the robot teach pendent
     """
 
     def __init__(self, IP:str = "164.54.116.129", PORT:int = 29999, tool_changer_pv:str = "8idSMC100PIP:LJT7:1:DO0", pipette_pv:str = "8idQZpip:m1.VAL", camera_pv:str = None, gripper:bool = False):
@@ -23,7 +23,7 @@ class UR3_8_ID_I(URRobot):
         self.blend_radius_m = 0.001
         self.ref_frame = [0,0,0,0,0,0]
 
-        self.home = [0.07965465094358973, 0.1331286487752626, 0.46622559375534944, 0.8893786745124569, -1.4184312527016423, -1.5680218376629318]
+        self.home_l = [0.07965465094358973, 0.1331286487752626, 0.46622559375534944, 0.8893786745124569, -1.4184312527016423, -1.5680218376629318]
         self.home_J = [2.017202138900757, -1.137721137409546, -0.9426093101501465, -2.6425615749754847, -4.693090263997213, -3.8424256483661097]
         self.pipette_loc = [-0.30710397664568057, 0.2223363316295067, 0.25346649921490616, 0.9780579194931717, -1.3456500374612195, -1.5122814896417478]
         self.pipette_loc_J = [2.8711442947387695, -1.8251310787596644, -1.5156354904174805, -1.3721376222423096, -4.720762554799215, -3.0886977354632776]
@@ -53,73 +53,41 @@ class UR3_8_ID_I(URRobot):
         self.pipette_dispense_value = -2.0
         self.droplet_value = 0.3
 
-
-    def connect_robot(self):
-        """
-        Description: Create conenction to the robot
-        """
-
-        i = 1
-        while True:
-            try:
-                robot_conenction = Robot(self.IP)
-                sleep(0.2)
-                print('Successful ur3 connection on attempt #{}'.format(i))
-                return robot_conenction
-
-            except:
-                print('Failed attempt #{}'.format(i))
-                i+=1
-
-    def disconnect_robot(self):
-        """
-        Description: Disconnects the socket connection with the UR robot
-        """
-        self.ur3.close()
-        print("Robot connection is closed.")
-
     def home_robot(self):
         """
         Description: Moves the robot to the home location.
         """
         print("Homing the robot...")
-        self.ur3.movej(self.home_J, self.accel_radss, self.speed_ms, 0, 0)
+        self.ur.movej(self.home_J, self.accel_radss, self.speed_ms, 0, 0)
         sleep(4)
 
         print("Robot moved to home location")
 
-    def get_joint_angles(self):
-        """
-        Description: Gets the joint angles of the robot.
-        """
-        joint_angles = self.ur3.getl()
-        print("Join angels: ", joint_angles)
-        return joint_angles
 
     def pick_pipette(self):
         """
         Description: Moves the roboto to the doscking location and then picks up the pipette.
         """
         print("Picking up the pipette...")
-        accel_mss   = 1.00
+        accel_mss = 1.00
         speed_ms = 1.00
         try:
             print("Picking up the pipette...")
             sleep(1)
-            self.ur3.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
             sleep(2)
-            self.ur3.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
             speed_ms = 0.01
             sleep(1)
-            self.ur3.movel(self.pipette_loc,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_loc,self.accel_mss,speed_ms,0,0)
             sleep(5)
             # LOCK THE TOOL CHANGER TO ATTACH THE PIPETTE HERE
             self.lock_tool_changer()
             sleep(5.0)
-            self.ur3.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
             sleep(1)
             speed_ms = 0.1
-            self.ur3.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
             sleep(2)
             print("Pipette successfully picked up")
 
@@ -133,20 +101,20 @@ class UR3_8_ID_I(URRobot):
         try:
             print("Placing the pipette...")
             speed_ms = 0.5
-            self.ur3.movel(self.pipette_above,self.accel_radss, self.speed_ms,0,0)
+            self.ur.movel(self.pipette_above,self.accel_radss, self.speed_ms,0,0)
             sleep(2)
-            self.ur3.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0) 
+            self.ur.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0) 
             sleep(1)
             speed_ms = 0.01
-            self.ur3.movel(self.pipette_loc,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_loc,self.accel_mss,speed_ms,0,0)
             sleep(5)
             # Detach pipette
             self.unlock_tool_changer()
             sleep(5.0)
-            self.ur3.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_approach,self.accel_mss,speed_ms,0,0)
             sleep(1)
             speed_ms = 0.500
-            self.ur3.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.pipette_above,self.accel_mss,speed_ms,0,0)
             sleep(2)
             print("Pipette successfully placed")
 
@@ -161,17 +129,17 @@ class UR3_8_ID_I(URRobot):
             print("Picking up the first pipette tip...")
             speed_ms = 0.100
 
-            self.ur3.movel(self.tip1_above,self.accel_radss,self.speed_rads,0,0)
+            self.ur.movel(self.tip1_above,self.accel_radss,self.speed_rads,0,0)
             sleep(2)
             speed_ms = 0.01
-            self.ur3.movel(self.tip1_approach,self.accel_radss,self.speed_rads,0,0)
+            self.ur.movel(self.tip1_approach,self.accel_radss,self.speed_rads,0,0)
             sleep(2)    
-            self.ur3.movel(self.tip1_loc,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip1_loc,self.accel_mss,speed_ms,0,0)
             sleep(3)
-            self.ur3.movel(self.tip1_approach,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip1_approach,self.accel_mss,speed_ms,0,0)
             sleep(2)
             speed_ms = 0.1
-            self.ur3.movel(self.tip1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip1_above,self.accel_mss,speed_ms,0,0)
             sleep(2)
             print("Pipette tip successfully picked up")
 
@@ -185,17 +153,17 @@ class UR3_8_ID_I(URRobot):
         try:
             print("Picking up the second pipette tip...")
             speed_ms = 0.100
-            self.ur3.movel(self.tip2_above,self.accel_radss,self.speed_rads,0,0)
+            self.ur.movel(self.tip2_above,self.accel_radss,self.speed_rads,0,0)
             sleep(2)
             speed_ms = 0.01
-            self.ur3.movel(self.tip2_approach,self.accel_radss,self.speed_rads,0,0)
+            self.ur.movel(self.tip2_approach,self.accel_radss,self.speed_rads,0,0)
             sleep(2)    
-            self.ur3.movel(self.tip2_loc,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip2_loc,self.accel_mss,speed_ms,0,0)
             sleep(3)
-            self.ur3.movel(self.tip2_approach,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip2_approach,self.accel_mss,speed_ms,0,0)
             sleep(2)
             speed_ms = 0.1
-            self.ur3.movel(self.tip2_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.tip2_above,self.accel_mss,speed_ms,0,0)
             sleep(2)    
             print("Second pipette tip successfully picked up")
 
@@ -215,25 +183,25 @@ class UR3_8_ID_I(URRobot):
             
             # MOVE TO THE FIRT SAMPLE LOCATION
             speed_ms = 0.1
-            self.ur3.movel(self.sample1_above,self.accel_mss,self.speed_ms,0,0)
+            self.ur.movel(self.sample1_above,self.accel_mss,self.speed_ms,0,0)
             sleep(2)
-            self.ur3.movel(self.sample1,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.sample1,self.accel_mss,speed_ms,0,0)
             sleep(2)
 
             # ASPIRATE FIRST SAMPLE
             self.aspirate_pipette()
-            self.ur3.movel(self.sample1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.sample1_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
 
             # MOVE TO THE 1ST WELL
-            self.ur3.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
-            self.ur3.movel(self.well1,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1,self.accel_mss,speed_ms,0,0)
             sleep(1)
 
             # DISPENSE FIRST SAMPLE INTO FIRST WELL
             self.dispense_pipette()
-            self.ur3.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
 
             # Changing tip
@@ -241,20 +209,20 @@ class UR3_8_ID_I(URRobot):
             self.pick_tip2()
 
             # MOVE TO THE SECON SAMPLE LOCATION
-            self.ur3.movel(self.sample2_above,self.accel_mss,self.speed_ms,0,0)
+            self.ur.movel(self.sample2_above,self.accel_mss,self.speed_ms,0,0)
             sleep(3)
-            self.ur3.movel(self.sample2,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.sample2,self.accel_mss,speed_ms,0,0)
             sleep(2)
 
             # ASPIRATE SECOND SAMPLE
             self.aspirate_pipette()       
-            self.ur3.movel(self.sample2_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.sample2_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
 
             # MOVE TO THE 1ST WELL
-            self.ur3.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
             sleep(1)    
-            self.ur3.movel(self.well1,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1,self.accel_mss,speed_ms,0,0)
             sleep(1)
 
             # DISPENSE SECOND SAMPLE INTO FIRST WELL
@@ -268,7 +236,7 @@ class UR3_8_ID_I(URRobot):
             # Aspirate all the liquid   
             self.aspirate_pipette()
             self.aspirate_pipette()
-            self.ur3.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.well1_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
             print("Sample is prepared")
 
@@ -391,13 +359,13 @@ class UR3_8_ID_I(URRobot):
         try:
             print("Droping tip to the trash bin...")
             # Move to the trash bin location
-            self.ur3.movel(self.trash_bin_above, self.accel_mss, self.speed_ms,0,0)
+            self.ur.movel(self.trash_bin_above, self.accel_mss, self.speed_ms,0,0)
             sleep(2)
-            self.ur3.movel(self.trash_bin, self.accel_mss, self.speed_ms, 0, 0)
+            self.ur.movel(self.trash_bin, self.accel_mss, self.speed_ms, 0, 0)
             sleep(2)
             self.eject_tip()
             sleep(1)
-            self.ur3.movel(self.trash_bin_above, self.accel_mss, self.speed_ms,0,0)
+            self.ur.movel(self.trash_bin_above, self.accel_mss, self.speed_ms,0,0)
             sleep(2)
         except Exception as err:
             print("Droping tip to the trash bin failed: ", err)
@@ -423,10 +391,10 @@ class UR3_8_ID_I(URRobot):
             print("Empting tip...")
             speed_ms = 0.5  
             # Moving the robot to the empty tube location
-            self.ur3.movel(self.empty_tube_above,self.accel_mss,self.speed_ms,0,0)
+            self.ur.movel(self.empty_tube_above,self.accel_mss,self.speed_ms,0,0)
             sleep(2)
             speed_ms = 0.1
-            self.ur3.movel(self.empty_tube,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.empty_tube,self.accel_mss,speed_ms,0,0)
             sleep(2)
 
             # Drive the pipette three times to dispense all the liquid inside the pipette tip.
@@ -434,7 +402,7 @@ class UR3_8_ID_I(URRobot):
                 self.dispense_pipette()
                 sleep(1)
 
-            self.ur3.movel(self.empty_tube_above,self.accel_mss,speed_ms,0,0)
+            self.ur.movel(self.empty_tube_above,self.accel_mss,speed_ms,0,0)
             sleep(1)
         
         except Exception as err:
@@ -465,6 +433,6 @@ class UR3_8_ID_I(URRobot):
 
 if __name__ == "__main__":
 
-    robot = UR3_8_ID_I()
+    robot = ur_8_ID_I()
     robot.droplet_exp()
 
