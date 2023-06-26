@@ -16,11 +16,11 @@ from wei_services.srv import WeiActions
 class URClient(Node):
     '''
     The jointControlNode inputs data from the 'action' topic, providing a set of commands for the driver to execute. It then receives feedback, 
-    based on the executed command and publishes the state of the peeler and a description of the peeler to the respective topics.
+    based on the executed command and publishes the state of the ur and a description of the ur to the respective topics.
     '''
-    def __init__(self, TEMP_NODE_NAME = "ur_Client_Node"):
+    def __init__(self, TEMP_NODE_NAME = "Ur_Client_Node"):
         '''
-        The init function is neccesary for the peelerNode class to initialize all variables, parameters, and other functions.
+        The init function is neccesary for the URCLient class to initialize all variables, parameters, and other functions.
         Inside the function the parameters exist, and calls to other functions and services are made so they can be executed in main.
         '''
 
@@ -68,7 +68,7 @@ class URClient(Node):
 
     def stateCallback(self):
         '''
-        Publishes the peeler state to the 'state' topic. 
+        Publishes the ur state to the 'state' topic. 
         '''
         msg = String()
 
