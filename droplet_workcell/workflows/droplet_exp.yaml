@@ -1,7 +1,7 @@
 metadata:
-  name: PCR - Workflow
-  author: Casey Stone, Rafael Vescovi
-  info: Initial PCR workflow for RPL workcell
+  name: Droplet - Workflow
+  author: Doga Ozgulbas
+  info: Initial Droplet workflow for 8IDI workcell
   version: 0.1
 
 workcell: /home/rpl/workspace/8IDI_workcell/droplet_workcell/droplet_workcell.yaml
@@ -20,4 +20,4 @@ flowdef:
       tip_number_1: 1
       tip_number_2: 2  
     checks: null
-    comment: Place plate in Tecan
+    comment: Run the droplet exp
