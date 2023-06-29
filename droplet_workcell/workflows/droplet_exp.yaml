@@ -4,7 +4,7 @@ metadata:
   info: Initial PCR workflow for RPL workcell
   version: 0.1
 
-workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
+workcell: /home/rpl/workspace/8IDI_workcell/droplet_workcell/droplet_workcell.yaml
 
 modules:
 
