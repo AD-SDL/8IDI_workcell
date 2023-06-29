@@ -8,7 +8,7 @@ from rpl_wei.wei_workcell_base import WEI
 from pathlib import Path
 
 def main():
-    wf_path = Path('/home/rpl/workspace/rpl_workcell/bio_workcell/workflows/droplet_exp.yaml')
+    wf_path = Path('/home/rpl/workspace/8ID_workcell/droplet_workcell/workflows/droplet_exp.yaml')
 
     wei_client = WEI(wf_config = wf_path.resolve(), workcell_log_level=logging.ERROR, workflow_log_level=logging.ERROR)
 
