@@ -1,0 +1,84 @@
+metadata:
+  name: PCR - Workflow
+  author: Casey Stone, Rafael Vescovi
+  info: Initial PCR workflow for RPL workcell
+  version: 0.1
+
+workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
+
+modules:
+
+  - name: ur
+
+
+flowdef:
+
+  - name: Run droplet experiment
+    module: ur
+    command: pick_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  # - name: Run droplet experiment
+  #   module: ur
+  #   command: home
+  #   args:
+  #     tip_number_1: 1
+  #     tip_number_2: 2  
+  #   checks: null
+  #   comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: create_sample
+    args:
+      home:  [-1.355, -2.541, 1.844, -0.891, -1.559, 3.340]
+      sample1_loc: [0.15220619381604186, 0.21043816573205595, 0.09618091909170277, 1.444826407763332, -0.2548060433102738, -0.31289353129621067]
+      sample2_loc: [0.15186061464767017, 0.18822197623964088, 0.09490910394912143, 1.4440966224799245, -0.255613147568461, -0.3122426586441542]
+      well_loc: [0.12772478460859046, 0.21370236710062357, 0.08390608100945282, 1.4380130231592743, -0.2414629895555231, -0.2954608172533908]
+      tip1_loc: 1
+      tip2_loc: 2
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: place_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: run_droplet
+    args:
+      test: null
+    checks: null
+    comment: 
+  
+  - name: Run droplet experiment
+    module: ur
+    command: pick_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: dispose_tip
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: place_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
