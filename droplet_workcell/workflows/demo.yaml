@@ -8,30 +8,30 @@ workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
 
 modules:
 
-  - name: ur3
+  - name: ur
 
 
 flowdef:
 
   - name: Run droplet experiment
-    module: ur3
+    module: ur
     command: pick_pipette
     args:
       test: null
     checks: null
-    comment: Place plate in Tecan
+    comment: 
 
   - name: Run droplet experiment
-    module: ur3
+    module: ur
     command: home
     args:
       tip_number_1: 1
       tip_number_2: 2  
     checks: null
-    comment: Place plate in Tecan
+    comment: 
 
   - name: Run droplet experiment
-    module: ur3
+    module: ur
     command: create_sample
     args:
       home:  [-1.355, -2.541, 1.844, -0.891, -1.559, 3.340]
@@ -41,6 +41,44 @@ flowdef:
       tip1_loc: 1
       tip2_loc: 2
     checks: null
-    comment: Place plate in Tecan
+    comment: 
 
+  - name: Run droplet experiment
+    module: ur
+    command: place_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
 
+  - name: Run droplet experiment
+    module: ur
+    command: run_droplet
+    args:
+      test: null
+    checks: null
+    comment: 
+  
+  - name: Run droplet experiment
+    module: ur
+    command: pick_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: dispose_tip
+    args:
+      test: null
+    checks: null
+    comment: 
+
+  - name: Run droplet experiment
+    module: ur
+    command: place_pipette
+    args:
+      test: null
+    checks: null
+    comment: 
