@@ -21,14 +21,14 @@ flowdef:
     checks: null
     comment: 
 
-  - name: Run droplet experiment
-    module: ur
-    command: home
-    args:
-      tip_number_1: 1
-      tip_number_2: 2  
-    checks: null
-    comment: 
+  # - name: Run droplet experiment
+  #   module: ur
+  #   command: home
+  #   args:
+  #     tip_number_1: 1
+  #     tip_number_2: 2  
+  #   checks: null
+  #   comment: 
 
   - name: Run droplet experiment
     module: ur
