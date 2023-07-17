@@ -14,4 +14,4 @@ modules:
     type: wei_ros_node
     model: ur3
     config:
-      ros_node: '/std_ns/8idiURNode'
+      ros_node: '/std_ns/ur_client'
