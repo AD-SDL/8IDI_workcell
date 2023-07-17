@@ -14,10 +14,30 @@ modules:
 flowdef:
 
   - name: Run droplet experiment
-    module: ur5
-    command: run_droplet
+    module: ur3
+    command: pick_pipette
+    args:
+      test: null
+    checks: null
+    comment: Place plate in Tecan
+
+  - name: Run droplet experiment
+    module: ur3
+    command: home
     args:
       tip_number_1: 1
       tip_number_2: 2  
     checks: null
     comment: Place plate in Tecan
+
+  - name: Run droplet experiment
+    module: ur3
+    command: create_sample
+    args:
+      home:  [-1.355, -2.541, 1.844, -0.891, -1.559, 3.340]
+      tip1_loc: 1
+      tip2_loc: 2
+    checks: null
+    comment: Place plate in Tecan
+
+
