@@ -1,15 +1,11 @@
 metadata:
-  name: PCR - Workflow
-  author: Casey Stone, Rafael Vescovi
-  info: Initial PCR workflow for RPL workcell
+  name: Droplet Workflow
+  author: Doga Ozgulbas
+  info: Initial droplet workflow for 8IDI workcell
   version: 0.1
 
-workcell: /home/rpl/workspace/rpl_workcell/bio_workcell/bio_workcell.yaml
-
 modules:
-
   - name: ur
-
 
 flowdef:
 
