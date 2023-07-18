@@ -1,5 +1,6 @@
+name: Droplet Workflow
+
 metadata:
-  name: Droplet Workflow
   author: Doga Ozgulbas
   info: Initial droplet workflow for 8IDI workcell
   version: 0.1
@@ -11,15 +12,11 @@ flowdef:
 
   - name: Run droplet experiment
     module: ur
-    command: pick_pipette
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: pick_pipette
 
   # - name: Run droplet experiment
   #   module: ur
-  #   command: home
+  #   action: home
   #   args:
   #     tip_number_1: 1
   #     tip_number_2: 2  
@@ -28,7 +25,7 @@ flowdef:
 
   - name: Run droplet experiment
     module: ur
-    command: create_sample
+    action: create_sample
     args:
       home:  [-1.355, -2.541, 1.844, -0.891, -1.559, 3.340]
       sample1_loc: [0.15220619381604186, 0.21043816573205595, 0.09618091909170277, 1.444826407763332, -0.2548060433102738, -0.31289353129621067]
@@ -36,45 +33,23 @@ flowdef:
       well_loc: [0.12772478460859046, 0.21370236710062357, 0.08390608100945282, 1.4380130231592743, -0.2414629895555231, -0.2954608172533908]
       tip1_loc: [0.049076405377552826, 0.35130426249264163, 0.063, 0.9759108742683295, -1.3350220046082053, -1.5092226077826993]
       tip2_loc: [0.04909177440821851, 0.3411316353820866, 0.0628, 0.977119433532159, -1.3337829736507698, -1.5108373189678133]
-    checks: null
-    comment: 
 
   - name: Run droplet experiment
     module: ur
-    command: place_pipette
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: place_pipette
 
   - name: Run droplet experiment
     module: ur
-    command: run_droplet
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: run_droplet
   
   - name: Run droplet experiment
     module: ur
-    command: pick_pipette
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: pick_pipette
 
   - name: Run droplet experiment
     module: ur
-    command: dispose_tip
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: dispose_tip
 
   - name: Run droplet experiment
     module: ur
-    command: place_pipette
-    args:
-      test: null
-    checks: null
-    comment: 
+    action: place_pipette
