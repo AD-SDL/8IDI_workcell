@@ -4,14 +4,19 @@
       { "name"    : "demo.yaml",
         "actions" : [
           { "name": "pick_pipette", "instrument":  "ur" },
-          { "name": "run_protocol", "instrument":  "ur"},
-          { "name": "close", "instrument":  "ur" },
-          { "name": "open_gate", "instrument":  "ur" },
-          { "name": "transfer", "instrument":  "ur", "from":"ur", "to":"ur" },
-          { "name": "run_ur", "instrument":  "ur", "protocol": "ur_protocol" },
-          { "name": "open_gate", "instrument":  "ur" },
-          { "name": "transfer", "instrument":  "ur", "from":"ur", "to":"ur" },
-          { "name": "close_gate", "instrument":  "ur" }
+          { "name": "create_sample", "instrument":  "ur",  
+          "home":  "ur3.locations.home", 
+          "sample1_loc": "ur3.locations.sample1_loc", 
+          "sample2_loc":" ur3.locations.sample2_loc",
+          "well_loc": "ur3.locations.well_loc",
+          "tip1_loc": "ur3.locations.tip1_loc",
+          "tip2_loc": "ur3.locations.tip2_loc"},
+          { "name": "place_pipette", "instrument":  "ur" },
+          { "name": "run_droplet", "instrument":  "ur" },
+          { "name": "pick_pipette", "instrument":  "ur"},
+          { "name": "dispose_tip", "instrument":  "ur"},
+          { "name": "place_pipette", "instrument":  "ur"}
+
         ]
       }
     ]
