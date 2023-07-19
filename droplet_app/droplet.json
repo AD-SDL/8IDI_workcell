@@ -1,0 +1,19 @@
+{ "python":
+  { "name"    : "droplet_app.py",
+    "workflows" : [
+      { "name"    : "demo.yaml",
+        "actions" : [
+          { "name": "pick_pipette", "instrument":  "ur" },
+          { "name": "run_protocol", "instrument":  "ur"},
+          { "name": "close", "instrument":  "ur" },
+          { "name": "open_gate", "instrument":  "ur" },
+          { "name": "transfer", "instrument":  "ur", "from":"ur", "to":"ur" },
+          { "name": "run_ur", "instrument":  "ur", "protocol": "ur_protocol" },
+          { "name": "open_gate", "instrument":  "ur" },
+          { "name": "transfer", "instrument":  "ur", "from":"ur", "to":"ur" },
+          { "name": "close_gate", "instrument":  "ur" }
+        ]
+      }
+    ]
+  }
+}
